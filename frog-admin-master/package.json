@@ -42,5 +42,9 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "description": "[Preview](https://tarnishablec.github.io/frog-admin/#/)",
+  "main": "alias.config.js",
+  "author": "",
+  "license": "ISC"
 }
