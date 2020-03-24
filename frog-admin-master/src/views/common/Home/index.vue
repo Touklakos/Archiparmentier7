@@ -1,33 +1,38 @@
 <template>
 	<div id="home">
+		<img alt="Vue logo" src="../../../assets/logo.png" width="200" height="200">
+		<HelloWorld msg="Bienvenue Dans Anakroan Decks !"/>
 		<div>
-			<fr-icon icon="search"/><br>
-			<fx-debounce-input :debounce-time="1000" v-model="input"/><br>
-			v-model : {{input}}
+			<el-button type="info" @click="goInsta">Instragram</el-button>
+			<el-button type="success" @click="goTwitter">Twitter</el-button>
+			<el-button type="primary" @click="goFacebook">Facebook</el-button>
+	
 		</div>
+		
 	</div>
 </template>
 
 <script>
 	// @ is an alias to /src
-	import fxDebounceInput from "@/components/frogx-ui/debounceInput/index";
+	import HelloWorld from '@/components/HelloWorld.vue'
 
 	export default {
-		name: 'Recherche cartes',
-		components: {fxDebounceInput},
-		data() {
-			return {
-				input: '',
-				eli: 'ok',
-			}
+		name: 'home',
+		components: {
+			HelloWorld
 		},
-		methods: {},
-		mounted() {
-
-		},
+		methods: {
+			goInsta() {
+				window.open('https://www.instagram.com/');
+			},
+			goTwitter(){
+				window.open('https://twitter.com/explore');
+			},
+			goFacebook(){
+				window.open('https://www.facebook.com/');
+			},
+		}
 	}
-
-
 </script>
 
 <style lang="scss" scoped>
