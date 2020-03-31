@@ -1,12 +1,14 @@
+
+
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-      <input v-model="messagde" placeholder="Inscrivez ce que vous recherchez"> <br>
-      <span>Le message est : {{messagde}}</span>
+      
   </div>
 </template>
 
 <script>
+import fxDebounceInput from "@/components/frogx-ui/debounceInput/index";
 export default {
   name: 'HelloWorld',
   props: {
