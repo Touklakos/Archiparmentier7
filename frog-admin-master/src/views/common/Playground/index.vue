@@ -7,7 +7,10 @@
 					<el-input v-model="eli" placeHolder="Bonjour"/>
 				<br>
 				<div id="example-1">
+					
 				  <button v-on:click="search($event, eli)">Search</button>
+
+				  <button v-on:click="sauvegarderDeck()">Sauvegarder le Deck</button>
 				</div>
 			</div>
 		</div>
@@ -16,7 +19,8 @@
 </template>
 
 <script>
-
+	var FileSaver = require('file-saver');
+	var blob = new Blob(["//votre deck :\n"], {type: "text/plain;charset=utf-8"});
 	import fxDebounceInput from "@/components/frogx-ui/debounceInput/index";
 
 	export default {
@@ -43,7 +47,19 @@
 								var img = document.createElement('img');
 								img.src = cards.imageUrl;
 								img.style = "width:200px";
+								var buttonAjoute = document.createElement('button');
+								buttonAjoute.innerHTML = 'Ajouter';
+								buttonAjoute.onclick = function(){
+									var nbCard = prompt("Vous voulez ajouter "+ cards.name+" \n Indiquez le nombre d'exemplaire :", "1");
+  									if (nbCard == "null" || nbCard == "" || nbCard == "0") {
+    									alert("attention champ non-rempli !")
+  									} else {
+    									blob = new Blob([blob,nbCard+" "+cards.name+"\n"], {type: "text/plain;charset=utf-8"});
+  									}
+																		
+  								};
 								container.appendChild(img);
+								container.appendChild(buttonAjoute);
 							}
 				    })
 				}
@@ -51,6 +67,11 @@
 				request.send()
 
 			},
+			sauvegarderDeck: function(){
+				FileSaver.saveAs(blob, "Deck Magic.txt");
+				blob = new Blob(["//votre deck :\n"], {type: "text/plain;charset=utf-8"});
+			}
+			
 		},
 		mounted() {
 
