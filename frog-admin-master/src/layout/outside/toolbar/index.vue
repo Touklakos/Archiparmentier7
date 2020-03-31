@@ -2,8 +2,7 @@
 	<div id="toolbar">
 		<sidebar-activator/>
 		<div class="spacer"></div>
-		<el-button type="success" @click="login">login</el-button>
-		<el-button type="danger" @click="logout">logout</el-button>
+
 	</div>
 </template>
 

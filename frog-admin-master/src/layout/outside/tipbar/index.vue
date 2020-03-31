@@ -1,12 +1,5 @@
 <template>
-	<div id="tipbar" :class="{'tipbar-hide':!tipbarOpen}">
-		<div id="tipbar-trigger" @click="toggleTipbar">
-			<fr-icon :icon="tipbarOpen? 'doubleright':'heatmap'"/>
-		</div>
-		<transition name="fade" mode="out-in">
-			<router-view name="tip"/>
-		</transition>
-	</div>
+	
 </template>
 
 <script>
