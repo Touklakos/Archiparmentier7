@@ -4,19 +4,25 @@
 		<div style="border: 1px solid grey;padding: 10px;border-radius: 5px">
 			<div>
 				<div>Recherche Cartes</div>
-					<el-input v-model="eli" v-on:keyup.13="alert('oscour')" placeHolder="Rechercher des cartes Magic"/>
+					<el-input v-model="eli" @keyup.enter="alert('oscour')" placeHolder="Rechercher des cartes Magic"/>
 				<br>
 				<div id="example-1">
 				  <button v-on:click="search($event, eli)">Search</button>
-					<button disabled=true id="previous" v-on:click="previousPage($event)">Page précédante</button>
-					<button disabled=true id="next" v-on:click="nextPage($event)">Page suivante</button>
-					<button v-on:click="sauvegarderDeck()">Sauvegarder le Deck</button>
+					<button disabled=true class="previous" v-on:click="previousPage($event)">Page précédante</button>
+					<button disabled=true class="next" v-on:click="nextPage($event)">Page suivante</button>
 				</div>
 			</div>
 		</div>
-		<div id="deck" style="height:200px;overflow:auto"></div>
-		
-		<div id="reponse" style="text-align:center;"></div>
+		<div id="deck" style="height:350px;width:60%;overflow:auto;border: 1px solid grey;padding: 10px;border-radius: 5px;position:absolute;right:20px">
+			Deck
+			<button v-on:click="sauvegarderDeck()">Sauvegarder le Deck</button>
+		</div>
+
+		<div id="reponse"></div>
+		<div id="example-1">
+			<button disabled=true class="previous" v-on:click="previousPage($event)">Page précédante</button>
+			<button disabled=true class="next" v-on:click="nextPage($event)">Page suivante</button>
+		</div>
 	</section>
 </template>
 
@@ -40,22 +46,16 @@
 
 				this.lastQuery = query
 				this.page = page
-
-				document.getElementById('next').disabled = false
-
-				if(this.page <= 1) {
-
-					document.getElementById('previous').disabled = true
-
-				} else {
-
-					document.getElementById('previous').disabled = false
-
+				let nexts = document.getElementsByClassName('next')
+				for(var i = 0; i < nexts.length; i++) {
+					nexts.item(i).disabled = true;
+				}
+				let previouss = document.getElementsByClassName('previous')
+				for(var i = 0; i < previouss.length; i++) {
+					previouss.item(i).disabled = true;
 				}
 
 				query = this.transformeQuery(query)
-
-				let module = Math.floor(window.innerWidth/200)
 
 
 				const api = 'https://api.magicthegathering.io/v1/cards'
@@ -68,7 +68,6 @@
 				let contient = []
 				let self = this
 
-
 				request.open('GET', query, true)
 				request.onload = function() {
 				  let data = JSON.parse(this.response)
@@ -77,32 +76,62 @@
 							 	if(!contient.includes(cards.name)) {
 									let img = document.createElement('img');
 									img.src = cards.imageUrl;
-									img.style = "width:20%; max-width:250px; min-width:200px;display:block;margin:auto";
+									img.style = "width:20%; max-width:300px; min-width:200px;display:block";
 									img.ondblclick = function() {
 
 										self.ajouteCarteDeck(cards.name)
 
 									}
+
 									container.appendChild(img);
 
-									contient.push(cards.name)
 
+									contient.push(cards.name)
 
 								}
 							}
 				    })
+
+						if(contient.length == 0) {
+							let mess = document.createElement('p')
+							mess.innerHTML = 'Aucune carte ne correspont à votre recherche'
+							container.appendChild(mess);
+							let nexts = document.getElementsByClassName('next')
+							for(var i = 0; i < nexts.length; i++) {
+								nexts.item(i).disabled = true;
+							}
+						} else {
+
+							let nexts = document.getElementsByClassName('next')
+							for(var i = 0; i < nexts.length; i++) {
+								nexts.item(i).disabled = false;
+							}
+
+						}
+
+						if(self.page <= 1) {
+
+							let previouss = document.getElementsByClassName('previous')
+							for(var i = 0; i < previouss.length; i++) {
+								previouss.item(i).disabled = true;
+							}
+
+						} else {
+
+							let previouss = document.getElementsByClassName('previous')
+							for(var i = 0; i < previouss.length; i++) {
+								previouss.item(i).disabled = false;
+							}
+
+						}
 				}
 
 				request.send()
 
 			},
-			ajouteCarteDeck: function(name) {
+			ajouteCarteDeck: function(name, nombre = 1) {
 
-				if(this.deck[name] == undefined) {
-					this.deck[name] = 1
-				} else {
-					this.deck[name]++
-				}
+				this.deck[name] = nombre
 
 				this.majAffichage()
 
@@ -112,41 +141,54 @@
 
 			retireCarteDeck: function(name) {
 
-				if(this.deck[name] > 0) {
-					this.deck[name] -= 1
-				}
-
-				this.majAffichage()
-
+				this.ajouteCarteDeck(name, 0)
 
 			},
 
 			majAffichage: function() {
 
-				const container = document.getElementById('deck');
-				container.innerHTML = '';
 
-				let bouton = ''
-				let text = ''
 				const self = this
+
+				const container = document.getElementById('deck');
+				container.innerHTML = 'Deck '
+				let save = document.createElement('button');
+				save.innerHTML = 'Sauvegarder le Deck'
+				save.addEventListener('click', function() {
+					self.sauvegarderDeck();
+				});
+				container.appendChild(save)
+
+
 
 				for(let k in this.deck) {
 
 					if(this.deck[k] > 0) {
 
-						text = document.createElement('p');
-						bouton = document.createElement('button');
+						let text = document.createElement('p');
+						let nombre = document.createElement('input');
+						let bouton = document.createElement('button');
 						bouton.innerHTML = "retirer"
-
 						bouton.addEventListener('click', function() {
 							self.retireCarteDeck(k);
 						});
+						bouton.style = "margin-left:auto"
 
-						text.innerHTML = k + " : " + this.deck[k] + "\t"
+						nombre.type = "number"
+						nombre.min = "1"
+						nombre.value = this.deck[k]
+						nombre.addEventListener('change', function() {
+							self.ajouteCarteDeck(k, nombre.value);
+						});
+						nombre.style = "margin-left:auto"
 
+						text.innerHTML = k + " : "
+
+						text.appendChild(nombre);
 						text.appendChild(bouton);
 
 						container.appendChild(text);
+						container.appendChild(document.createElement('hr'));
 
 					}
 
@@ -259,7 +301,11 @@
 				let blob = new Blob(["//votre deck :\n"], {type: "text/plain;charset=utf-8"});
 				for(let k in this.deck) {
 
-					blob = new Blob([blob,this.deck[k]+" "+k+"\n"], {type: "text/plain;charset=utf-8"});
+					if(this.deck[k] > 0) {
+
+						blob = new Blob([blob,this.deck[k]+" "+k+"\n"], {type: "text/plain;charset=utf-8"});
+
+					}
 
 				}
 
