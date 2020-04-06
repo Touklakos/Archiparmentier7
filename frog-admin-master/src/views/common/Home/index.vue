@@ -2,28 +2,27 @@
 
 	<div id="home">
 		<img alt="Vue logo" src="../../../assets/logo.png" width="200" height="200">
-		<HelloWorld msg="Bienvenue Dans Anakroan Decks !"/>
+		<HelloWorld msg="Bienvenue dans Anakroan Decks !"/>
 		<p>
-			Pour Tout joueur de Magic, <br>
-			Bienvenue sur le le Anakroan Decks !!! <br>
-			Grâce à ce site vous pouvez rechercher vos carte <br>
-			Construire vos Decks <br>
-			Mais aussi retrouver vos magasins les plus proches afin de partager votre passion !<br>
+			Bienvenue sur Anakroan Decks !!! <br>
+			Grâce à ce site vous pouvez :<br>
+			Rechercher des cartes <br>
+			Construire vos decks <br>
+			Mais aussi retrouver les magasins partenaires les plus proches afin de partager votre passion !<br>
 		</p>
 		<br>
-		<img alt="play" src="../../../assets/play1.jpg" >
-		<p> Pour faire ses recherches de cartes</p>
-		<img alt="constructeur" src="../../../assets/constructeur1.jpg" >
-		<p> Pour acceder aux constructeur</p>
-		<img alt="maps" src="../../../assets/maps1.jpg" >
-		<p> Pour acceder à la carte maps pour trouver vos magasins</p>
+		<p>Cliquer sur :</p>
+		<fr-icon icon="search"/>
+		<p> Pour faire des recherches de cartes et construire rapidement un deck</p>
+		<fr-icon icon="earth"/>
+		<p> Pour voir les magasins partenaires Magic the Gathering</p>
 
 		<div>
 			<el-button type="info" @click="goInsta">Instragram</el-button>
 			<el-button type="success" @click="goTwitter">Twitter</el-button>
 			<el-button type="primary" @click="goFacebook">Facebook</el-button>
 		</div>
-		
+
 	</div>
 </template>
 

@@ -22,7 +22,7 @@ const fullRoutes = [
 			tip: () => import('@/views/common/Playground/tip')
 		},
 		meta: {
-			icon: 'smile',
+			icon: 'search',
 			sideName: 'Recherche'
 		}
 	},

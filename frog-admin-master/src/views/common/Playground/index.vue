@@ -4,23 +4,23 @@
 		<div style="border: 1px solid grey;padding: 10px;border-radius: 5px">
 			<div>
 				<div>Recherche Cartes</div>
-					<el-input v-model="eli" @keyup.enter="alert('oscour')" placeHolder="Rechercher des cartes Magic"/>
+					<el-input v-model="eli" placeHolder="Rechercher des cartes Magic"/>
 				<br>
 				<div id="example-1">
-				  <button v-on:click="search($event, eli)">Search</button>
-					<button disabled=true class="previous" v-on:click="previousPage($event)">Page précédante</button>
+				  <button v-on:click="search($event, eli)">Chercher</button>
+					<button disabled=true class="previous" v-on:click="previousPage($event)">Page précédente</button>
 					<button disabled=true class="next" v-on:click="nextPage($event)">Page suivante</button>
 				</div>
 			</div>
 		</div>
-		<div id="deck" style="height:350px;width:60%;overflow:auto;border: 1px solid grey;padding: 10px;border-radius: 5px;position:absolute;right:20px">
+		<div id="deck" style="height:350px;width:60%;overflow:auto;border: 1px solid grey;padding: 10px;border-radius: 5px;position:absolute;right:33px">
 			Deck
 			<button v-on:click="sauvegarderDeck()">Sauvegarder le Deck</button>
 		</div>
 
 		<div id="reponse"></div>
 		<div id="example-1">
-			<button disabled=true class="previous" v-on:click="previousPage($event)">Page précédante</button>
+			<button disabled=true class="previous" v-on:click="previousPage($event)">Page précédente</button>
 			<button disabled=true class="next" v-on:click="nextPage($event)">Page suivante</button>
 		</div>
 	</section>
@@ -279,7 +279,7 @@
 					ret = "loyalty="
 				} else if(type == "language") {
 					ret = "language="
-				} else if(type == "gameFormat") {
+				} else if(type == "gameFormat" || type == "format") {
 					ret = "gameFormat="
 				} else if(type == "legality") {
 					ret = "legality="
